@@ -1,0 +1,15 @@
+-js download/FrameInsertEveryEachKeyFrame.jsfl
+-main FrameInsertEveryEachKeyFrame
+-cp src/jsfl
+-cp src/common
+-lib haxe-jsfl
+-D jsfl
+
+--next
+
+-js download/FrameInsertEveryEachKeyFrame.jsfl
+-main FrameInsertEveryEachKeyFrame
+-cp src/jsfl
+-cp src/common
+-lib haxe-jsfl
+
