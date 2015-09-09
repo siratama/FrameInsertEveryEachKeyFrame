@@ -2,12 +2,16 @@
 var $estr = function() { return js.Boot.__string_rec(this,''); };
 var ExtensionIndex = function() {
 	var _g = this;
+	js.Lib.alert("check1");
 	this.csInterfaceUtil = flash_extension.csinterface.CSInterfaceUtil.create();
-	this.addedFramesElement = new $("#added_frames");
+	js.Lib.alert("check1");
+	var containerElement = new $("#container");
+	this.addedFramesElement = new $(".added_frames",containerElement);
 	this.addedFramesElement.val("1");
 	this.addedFramesElement.focus(function(event) {
 		_g.addedFramesElement.select();
 	});
+	js.Lib.alert("check1");
 	var insertButton = new $("#insert");
 	insertButton.mousedown(function(event1) {
 		_g.run(true);
@@ -19,6 +23,7 @@ var ExtensionIndex = function() {
 };
 ExtensionIndex.__name__ = true;
 ExtensionIndex.main = function() {
+	js.Lib.alert("check0");
 	window.addEventListener("load",function(event) {
 		new ExtensionIndex();
 	});
@@ -165,6 +170,11 @@ js.Boot.__string_rec = function(o,s) {
 	default:
 		return String(o);
 	}
+};
+js.Lib = function() { };
+js.Lib.__name__ = true;
+js.Lib.alert = function(v) {
+	alert(js.Boot.__string_rec(v,""));
 };
 var jsfl = {};
 jsfl.Boot = function() { };

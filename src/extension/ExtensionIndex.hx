@@ -21,10 +21,9 @@ class ExtensionIndex
 	{
 		csInterfaceUtil = CSInterfaceUtil.create();
 
-		var containerElement = new JQuery("#container");
-
-		addedFramesElement = new JQuery(".added_frames", containerElement);
+		addedFramesElement = new JQuery("#added_frames");
 		addedFramesElement.val("1");
+
 		addedFramesElement.focus(function(event){
 			addedFramesElement.select();
 		});

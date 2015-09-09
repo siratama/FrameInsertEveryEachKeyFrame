@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<ExtensionManifest Version="4.0" ExtensionBundleId="com.dango_itimi.FrameAnimationImport" ExtensionBundleVersion="1.0.0"
-		ExtensionBundleName="LibraryItemDuplication" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<ExtensionManifest Version="4.0" ExtensionBundleId="com.dango_itimi.FrameInsertEveryEachKeyFrame" ExtensionBundleVersion="1.0.0"
+		ExtensionBundleName="FrameInsertEveryEachKeyFrame" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<Author>
 		<![CDATA[siratama]]>
 	</Author>	<ExtensionList>
-		<Extension Id="com.dango_itimi.FrameAnimationImport" Version="1.0.0" />
+		<Extension Id="com.dango_itimi.FrameInsertEveryEachKeyFrame" Version="1.0.0" />
 	</ExtensionList>
 	<ExecutionEnvironment>
 		<HostList>
@@ -20,19 +20,19 @@
 		</RequiredRuntimeList>
 	</ExecutionEnvironment>
 	<DispatchInfoList>
-		<Extension Id="com.dango_itimi.FrameAnimationImport">
+		<Extension Id="com.dango_itimi.FrameInsertEveryEachKeyFrame">
 
 			<DispatchInfo >
 				<Resources>
 				<MainPath>./index.html</MainPath>
-                <ScriptPath>./lib/FrameAnimationImport.jsfl</ScriptPath>
+                <ScriptPath>./lib/FrameInsertEveryEachKeyFrame.jsfl</ScriptPath>
 				</Resources>
 				<Lifecycle>
 					<AutoVisible>true</AutoVisible>
 				</Lifecycle>
 				<UI>
 					<Type>Panel</Type>
-					<Menu>FrameAnimationImport</Menu>
+					<Menu>FrameInsertEveryEachKeyFrame</Menu>
 					<Geometry>
 						<Size>
 							<Height>150</Height>

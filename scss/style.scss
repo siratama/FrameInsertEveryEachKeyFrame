@@ -18,12 +18,12 @@ body {
   position: relative;
 }
 
-$button_width: 70px;
+$button_width: 30px;
 button {
   padding: 1px 0;
   width: $button_width;
   color: #d7d7d7;
-  font-size: 11px;
+  font-size: 16px;
   border: 1px solid #151515;
   background: -webkit-linear-gradient(top, $gradient_first, $gradient_end);
 
@@ -56,11 +56,14 @@ ul{
 }
 li{
   float: left;
+  margin-right: 5px;
 }
 
+#remove{
+}
 #added_frames{
   width: 40px;
-  height: 25px;
+  height: 30px;
   text-align: center;
 }
 

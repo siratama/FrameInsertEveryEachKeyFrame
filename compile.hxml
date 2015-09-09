@@ -1,4 +1,4 @@
--js deploy/lib/FrameInsertEveryEachKeyFrame.jsfl
+-js deploy/index.js
 -main ExtensionIndex
 -cp src/common
 -cp src/extension
@@ -21,3 +21,7 @@
 
 -js download/FrameRemoveEveryEachKeyFrame.jsfl
 -D jsfl_remove
+
+--next
+
+-js deploy/lib/FrameInsertEveryEachKeyFrame.jsfl

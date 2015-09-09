@@ -11,16 +11,17 @@ var FrameInsertEveryEachKeyFrame = $hx_exports.FrameInsertEveryEachKeyFrame = fu
 		var layer = timeline.layers[layerId];
 		var frames = layer.frames;
 		var frameTotal = frames.length;
-		var _g2 = 0;
-		var _g1 = frames.length;
-		while(_g2 < _g1) {
-			var frameIndex = _g2++;
+		var _g1 = 0;
+		while(_g1 < frameTotal) {
+			var frameIndex = _g1++;
 			var frame = frames[frameIndex];
 			if(frame.startFrame != frameIndex) continue;
 			if(addedFrames > 0) timeline.insertFrames(addedFrames,false,frameIndex); else {
 				if(frame.duration == 1) continue;
-				timeline.removeFrames(frameIndex,frameIndex - addedFrames);
-				if(frameIndex + 1 >= layer.frameCount) break;
+				var minus;
+				if(frame.duration + addedFrames < 1) minus = -(frame.duration - 1); else minus = addedFrames;
+				timeline.removeFrames(frameIndex,frameIndex - minus);
+				if(frameIndex + 1 >= frameTotal) break;
 			}
 			frames = layer.frames;
 			frameTotal = frames.length;

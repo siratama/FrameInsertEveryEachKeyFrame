@@ -30,7 +30,7 @@ class FrameInsertEveryEachKeyFrame
 			var frames = layer.frames;
 			var frameTotal = frames.length;
 
-			for (frameIndex in 0...frames.length)
+			for (frameIndex in 0...frameTotal)
 			{
 				var frame = frames[frameIndex];
 				if(frame.startFrame != frameIndex) continue;
@@ -41,8 +41,10 @@ class FrameInsertEveryEachKeyFrame
 				else{
 					if(frame.duration == 1) continue;
 
-					timeline.removeFrames(frameIndex, frameIndex - addedFrames);
-					if(frameIndex + 1 >= layer.frameCount){
+					var minus = ((frame.duration + addedFrames) < 1) ? -(frame.duration - 1): addedFrames;
+					timeline.removeFrames(frameIndex, frameIndex - minus);
+
+					if(frameIndex + 1 >= frameTotal){
 						break;
 					}
 				}

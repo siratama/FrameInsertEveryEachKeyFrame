@@ -1,76 +1,40 @@
-(function () { "use strict";
-var $estr = function() { return js.Boot.__string_rec(this,''); };
-var ExtensionIndex = function() {
-	var _g = this;
-	this.csInterfaceUtil = flash_extension.csinterface.CSInterfaceUtil.create();
-	var containerElement = new $("#container");
-	this.addedFramesElement = new $(".added_frames",containerElement);
-	this.addedFramesElement.val("1");
-	this.addedFramesElement.focus(function(event) {
-		_g.addedFramesElement.select();
-	});
-	var insertButton = new $("#insert");
-	insertButton.mousedown(function(event1) {
-		_g.run(true);
-	});
-	var removeButton = new $("#remove");
-	removeButton.mousedown(function(event2) {
-		_g.run(false);
-	});
-};
-ExtensionIndex.__name__ = true;
-ExtensionIndex.main = function() {
-	window.addEventListener("load",function(event) {
-		new ExtensionIndex();
-	});
-};
-ExtensionIndex.prototype = {
-	run: function(plus) {
-		var addedFramesString = this.addedFramesElement.val();
-		if(addedFramesString == "") {
-			this.csInterfaceUtil.flTrace("Set frames num.");
-			return;
+(function ($hx_exports) { "use strict";
+var FrameInsertEveryEachKeyFrame = $hx_exports.FrameInsertEveryEachKeyFrame = function(addedFrames) {
+	if(jsfl.Lib.fl.getDocumentDOM() == null) return;
+	var timeline = jsfl.Lib.fl.getDocumentDOM().getTimeline();
+	var selectedLayerIds = timeline.getSelectedLayers();
+	var _g = 0;
+	while(_g < selectedLayerIds.length) {
+		var layerId = selectedLayerIds[_g];
+		++_g;
+		timeline.currentLayer = layerId;
+		var layer = timeline.layers[layerId];
+		var frames = layer.frames;
+		var frameTotal = frames.length;
+		var _g1 = 0;
+		while(_g1 < frameTotal) {
+			var frameIndex = _g1++;
+			var frame = frames[frameIndex];
+			if(frame.startFrame != frameIndex) continue;
+			if(addedFrames > 0) timeline.insertFrames(addedFrames,false,frameIndex); else {
+				if(frame.duration == 1) continue;
+				var minus;
+				if(frame.duration + addedFrames < 1) minus = -(frame.duration - 1); else minus = addedFrames;
+				timeline.removeFrames(frameIndex,frameIndex - minus);
+				if(frameIndex + 1 >= frameTotal) break;
+			}
+			frames = layer.frames;
+			frameTotal = frames.length;
 		}
-		if(!plus) addedFramesString = "-" + Std.string(addedFramesString);
-		this.csInterfaceUtil.evalScript("new " + "FrameInsertEveryEachKeyFrame" + "(" + Std.string(addedFramesString) + ");");
 	}
+};
+FrameInsertEveryEachKeyFrame.__name__ = true;
+FrameInsertEveryEachKeyFrame.main = function() {
 };
 var Std = function() { };
 Std.__name__ = true;
 Std.string = function(s) {
 	return js.Boot.__string_rec(s,"");
-};
-var flash_extension = {};
-flash_extension.csinterface = {};
-flash_extension.csinterface.CSInterfaceUtil = function(csInterface) {
-	this.csInterface = csInterface;
-};
-flash_extension.csinterface.CSInterfaceUtil.__name__ = true;
-flash_extension.csinterface.CSInterfaceUtil.create = function() {
-	return new flash_extension.csinterface.CSInterfaceUtil(new CSInterface());
-};
-flash_extension.csinterface.CSInterfaceUtil.prototype = {
-	runJsflScript: function(jsflUri) {
-		this.csInterface.evalScript("fl.runScript(\"" + jsflUri + "\")");
-	}
-	,flTrace: function(text) {
-		this.csInterface.evalScript("fl.trace(\"" + text + "\")");
-	}
-	,getExtensionUri: function() {
-		return "file:///" + this.csInterface.getSystemPath(SystemPath.EXTENSION);
-	}
-	,evalScript: function(script,callback) {
-		this.csInterface.evalScript(script,callback);
-	}
-	,addDataToDocument: function(key,dataType,data) {
-		this.csInterface.evalScript("document.addDataToDocument(\"" + key + "\", \"" + Std.string(dataType) + "\", \"" + data + "\");");
-	}
-	,getDataFromDocument: function(key,callback) {
-		this.csInterface.evalScript("document.getDataFromDocument(\"" + key + "\");",callback);
-	}
-	,addEventListener: function(eventType,callbackCode,callback) {
-		this.csInterface.evalScript("fl.addEventListener(\"" + Std.string(eventType) + "\", function(){ " + callbackCode + " });",callback);
-	}
 };
 var haxe = {};
 haxe.Log = function() { };
@@ -168,20 +132,94 @@ js.Boot.__string_rec = function(o,s) {
 	}
 };
 var jsfl = {};
+jsfl.AlignMode = function() { };
+jsfl.AlignMode.__name__ = true;
+jsfl.ArrangeMode = function() { };
+jsfl.ArrangeMode.__name__ = true;
 jsfl.Boot = function() { };
 jsfl.Boot.__name__ = true;
 jsfl.Boot.trace = function(v,infos) {
 	fl.trace("" + Std.string(v));
 };
+jsfl.ColorMode = function() { };
+jsfl.ColorMode.__name__ = true;
+jsfl.CompressionType = function() { };
+jsfl.CompressionType.__name__ = true;
+jsfl.DocumentEnterEditMode = function() { };
+jsfl.DocumentEnterEditMode.__name__ = true;
+jsfl.ElementType = function() { };
+jsfl.ElementType.__name__ = true;
 jsfl.EventType = function() { };
 jsfl.EventType.__name__ = true;
+jsfl.FilterType = function() { };
+jsfl.FilterType.__name__ = true;
+jsfl._InstanceType = {};
+jsfl._InstanceType.InstanceType_Impl_ = function() { };
+jsfl._InstanceType.InstanceType_Impl_.__name__ = true;
+jsfl.ItemType = function() { };
+jsfl.ItemType.__name__ = true;
+jsfl.LayerType = function() { };
+jsfl.LayerType.__name__ = true;
+jsfl.Lib = function() { };
+jsfl.Lib.__name__ = true;
+jsfl.Lib.alert = function(alertText) {
+	alert(alertText);
+};
+jsfl.Lib.confirm = function(strAlert) {
+	return confirm(strAlert);
+};
+jsfl.Lib.prompt = function(promptMsg,text) {
+	if(text == null) text = "";
+	return prompt(promptMsg,text);
+};
+jsfl.Lib.throwError = function(object,posInfos) {
+	jsfl.Lib.fl.trace("Error : " + Std.string(object) + " at " + posInfos.methodName + "[" + posInfos.fileName + ":" + posInfos.lineNumber + "]");
+	throw object;
+};
 jsfl.PersistentDataType = function() { };
 jsfl.PersistentDataType.__name__ = true;
+jsfl._SpriteSheetExporter = {};
+jsfl._SpriteSheetExporter.SpriteSheetExporterAlgorithm_Impl_ = function() { };
+jsfl._SpriteSheetExporter.SpriteSheetExporterAlgorithm_Impl_.__name__ = true;
+jsfl._SpriteSheetExporter.SpriteSheetExporterFormat_Impl_ = function() { };
+jsfl._SpriteSheetExporter.SpriteSheetExporterFormat_Impl_.__name__ = true;
+jsfl._SpriteSheetExporter.SpriteSheetExporterLayoutFormat_Impl_ = function() { };
+jsfl._SpriteSheetExporter.SpriteSheetExporterLayoutFormat_Impl_.__name__ = true;
+jsfl._SymbolInstance = {};
+jsfl._SymbolInstance.LoopType_Impl_ = function() { };
+jsfl._SymbolInstance.LoopType_Impl_.__name__ = true;
+jsfl.SymbolType = function() { };
+jsfl.SymbolType.__name__ = true;
+jsfl._TweenType = {};
+jsfl._TweenType.TweenType_Impl_ = function() { };
+jsfl._TweenType.TweenType_Impl_.__name__ = true;
 String.__name__ = true;
 Array.__name__ = true;
 haxe.Log.trace = jsfl.Boot.trace;
-ExtensionIndex.JSFL_CLASS_NAME = "FrameInsertEveryEachKeyFrame";
-ExtensionIndex.JSFL = "FrameInsertEveryEachKeyFrame" + ".jsfl";
+jsfl.AlignMode.LEFT = "left";
+jsfl.AlignMode.RIGHT = "right";
+jsfl.AlignMode.TOP = "top";
+jsfl.AlignMode.BOTTOM = "bottom";
+jsfl.AlignMode.VERTICAL_CENTER = "vertical center";
+jsfl.AlignMode.HORIZONTAL_CENTER = "horizontal center";
+jsfl.ArrangeMode.BACK = "back";
+jsfl.ArrangeMode.BACKWARD = "backward";
+jsfl.ArrangeMode.FORWARD = "forward";
+jsfl.ArrangeMode.FRONT = "front";
+jsfl.ColorMode.NONE = "none";
+jsfl.ColorMode.BRIGHTNESS = "brightness";
+jsfl.ColorMode.TINT = "tint";
+jsfl.ColorMode.ALPHA = "alpha";
+jsfl.ColorMode.ADVANCED = "advanced";
+jsfl.CompressionType.PHOTO = "photo";
+jsfl.CompressionType.LOSSLESS = "lossless";
+jsfl.DocumentEnterEditMode.IN_PLACE = "inPlace";
+jsfl.DocumentEnterEditMode.NEW_WINDOW = "newWindow";
+jsfl.ElementType.SHAPE = "shape";
+jsfl.ElementType.TEXT = "text";
+jsfl.ElementType.TLF_TEXT = "tlfText";
+jsfl.ElementType.INSTANCE = "instance";
+jsfl.ElementType.SHAPE_OBJ = "shapeObj";
 jsfl.EventType.DOCUMENT_NEW = "documentNew";
 jsfl.EventType.DOCUMENT_OPENED = "documentOpened";
 jsfl.EventType.DOCUMENT_CLOSED = "documentClosed";
@@ -194,11 +232,66 @@ jsfl.EventType.PRE_PUBLISH = "prePublish";
 jsfl.EventType.POST_PUBLISH = "postPublish";
 jsfl.EventType.SELECTION_CHANGED = "selectionChanged";
 jsfl.EventType.DPI_CHANGED = "dpiChanged";
+jsfl.FilterType.ADJUSTCOLOR = "adjustColorFilter";
+jsfl.FilterType.BEVEL = "bevelFilter";
+jsfl.FilterType.BLUR = "blurFilter";
+jsfl.FilterType.DROPSHADOW = "dropShadowFilter";
+jsfl.FilterType.GLOW = "glowFilter";
+jsfl.FilterType.GRADIENT_BEVEL = "gradientBevelFilter";
+jsfl.FilterType.GRADIENT_GLOW = "gradientGlowFilter";
+jsfl._InstanceType.InstanceType_Impl_.SYMBOL = "symbol";
+jsfl._InstanceType.InstanceType_Impl_.BITMAP = "bitmap";
+jsfl._InstanceType.InstanceType_Impl_.EMBEDDED_VIDEO = "embedded video";
+jsfl._InstanceType.InstanceType_Impl_.LINKED_VIDEO = "linked video";
+jsfl._InstanceType.InstanceType_Impl_.VIDEO = "video";
+jsfl._InstanceType.InstanceType_Impl_.COMPILED_CLIP = "compiled clip";
+jsfl.ItemType.UNDEFINED = "undefined";
+jsfl.ItemType.COMPONENT = "component";
+jsfl.ItemType.MOVIE_CLIP = "movie clip";
+jsfl.ItemType.GRAPHIC = "graphic";
+jsfl.ItemType.BUTTON = "button";
+jsfl.ItemType.FOLDER = "folder";
+jsfl.ItemType.FONT = "font";
+jsfl.ItemType.SOUND = "sound";
+jsfl.ItemType.BITMAP = "bitmap";
+jsfl.ItemType.COMPILED_CLIP = "compiled clip";
+jsfl.ItemType.SCREEN = "screen";
+jsfl.ItemType.VIDEO = "video";
+jsfl.LayerType.NORMAL = "normal";
+jsfl.LayerType.GUIDE = "guide";
+jsfl.LayerType.GUIDED = "guided";
+jsfl.LayerType.MASK = "mask";
+jsfl.LayerType.MASKED = "masked";
+jsfl.LayerType.FOLDER = "folder";
+jsfl.Lib.fl = fl;
 jsfl.PersistentDataType.INTEGER = "integer";
 jsfl.PersistentDataType.INTEGER_ARRAY = "integerArray";
 jsfl.PersistentDataType.DOUBLE = "double";
 jsfl.PersistentDataType.DOUBLE_ARRAY = "doubleArray";
 jsfl.PersistentDataType.STRING = "string";
 jsfl.PersistentDataType.BYTE_ARRAY = "byteArray";
-ExtensionIndex.main();
-})();
+jsfl._SpriteSheetExporter.SpriteSheetExporterAlgorithm_Impl_.BASIC = "basic";
+jsfl._SpriteSheetExporter.SpriteSheetExporterAlgorithm_Impl_.MAX_RECTS = "maxRects";
+jsfl._SpriteSheetExporter.SpriteSheetExporterFormat_Impl_.RGBA8888 = "RGBA8888";
+jsfl._SpriteSheetExporter.SpriteSheetExporterFormat_Impl_.RGB888x = "RGB888x";
+jsfl._SpriteSheetExporter.SpriteSheetExporterFormat_Impl_.RGB8 = "RGB8";
+jsfl._SpriteSheetExporter.SpriteSheetExporterLayoutFormat_Impl_.COCOS2D_V2 = "cocos2dv2";
+jsfl._SpriteSheetExporter.SpriteSheetExporterLayoutFormat_Impl_.COCOS2D_V3 = "cocos2dv3";
+jsfl._SpriteSheetExporter.SpriteSheetExporterLayoutFormat_Impl_.EASEL_JS = "easeljs";
+jsfl._SpriteSheetExporter.SpriteSheetExporterLayoutFormat_Impl_.JSON = "JSON";
+jsfl._SpriteSheetExporter.SpriteSheetExporterLayoutFormat_Impl_.JSON_ARRAY = "JSON-Array";
+jsfl._SpriteSheetExporter.SpriteSheetExporterLayoutFormat_Impl_.SPARROW_V1 = "Sparrow-v1";
+jsfl._SpriteSheetExporter.SpriteSheetExporterLayoutFormat_Impl_.SPARROW_V2 = "Sparrow-v2";
+jsfl._SpriteSheetExporter.SpriteSheetExporterLayoutFormat_Impl_.STARLING = "Starling";
+jsfl._SymbolInstance.LoopType_Impl_.LOOP = "loop";
+jsfl._SymbolInstance.LoopType_Impl_.PLAY_ONCE = "play once";
+jsfl._SymbolInstance.LoopType_Impl_.SINGLE_FRAME = "single frame";
+jsfl.SymbolType.MOVIE_CLIP = "movie clip";
+jsfl.SymbolType.GRAPHIC = "graphic";
+jsfl.SymbolType.BUTTON = "button";
+jsfl._TweenType.TweenType_Impl_.MOTION = "motion";
+jsfl._TweenType.TweenType_Impl_.SHAPE = "shape";
+jsfl._TweenType.TweenType_Impl_.NONE = "none";
+jsfl._TweenType.TweenType_Impl_.MOTION_OBJECT = "motion object";
+FrameInsertEveryEachKeyFrame.main();
+})(typeof window != "undefined" ? window : exports);
