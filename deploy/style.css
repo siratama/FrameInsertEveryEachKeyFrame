@@ -9,11 +9,9 @@ body {
   overflow: hidden;
   font: 11px arial, helvetica, "メイリオ", Meiryo, "ＭＳ Ｐゴシック", clean, sans-serif; }
 
-#haxe, #copy_name_rule {
-  padding: 10px 10px 5px 10px; }
-
-input[type="text"][disabled] {
-  background-color: #646464; }
+#container {
+  padding: 10px 10px 5px 10px;
+  position: relative; }
 
 button {
   padding: 1px 0;
@@ -29,52 +27,26 @@ button {
   button:disabled {
     color: #686868; }
 
-.title {
-  padding: 3px 0;
-  padding-left: 5px;
-  font-weight: bold;
-  background: -webkit-linear-gradient(top, #535353, #3e3e3e);
-  border: 1px solid #151515;
-  cursor: default;
-  -webkit-user-select: none; }
-  .title:before {
-    content: "";
-    padding-right: 15px;
-    background-image: url("img/cursor.png");
-    background-repeat: no-repeat;
-    background-position: 0 4px; }
-
 input {
-  background: #a0a0a0;
   border: 1px solid #000000;
-  font-size: 11px;
-  padding-left: 4px;
-  box-sizing: border-box;
-  width: 100%; }
+  font-size: 12px;
+  box-sizing: border-box; }
 
-#button {
-  border-top: 1px groove #555555;
-  padding-top: 10px;
-  padding-left: 10px;
-  position: relative; }
+button {
+  padding: 5px; }
 
-dt {
-  clear: both;
-  float: left;
-  width: 50px; }
+ul {
+  list-style: none; }
 
-dd {
-  margin-left: 50px;
-  margin-bottom: 5px; }
+li {
+  float: left; }
+
+#added_frames {
+  width: 40px;
+  height: 25px;
+  text-align: center; }
 
 .clear_both {
   clear: both; }
-
-.message {
-  position: absolute;
-  left: 90px;
-  top: 12px;
-  display: none;
-  color: #f4cc41; }
 
 /*# sourceMappingURL=style.css.map */

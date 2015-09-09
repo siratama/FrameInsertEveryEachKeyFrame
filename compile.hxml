@@ -1,15 +1,23 @@
--js download/FrameInsertEveryEachKeyFrame.jsfl
--main FrameInsertEveryEachKeyFrame
--cp src/jsfl
+-js deploy/lib/FrameInsertEveryEachKeyFrame.jsfl
+-main ExtensionIndex
 -cp src/common
+-cp src/extension
+-cp C:\googledrive\workspace\MyHaxelib\haxelib\src\adobe_extension
 -lib haxe-jsfl
--D jsfl
+-lib jQueryExtern
 
 --next
 
--js download/FrameInsertEveryEachKeyFrame.jsfl
 -main FrameInsertEveryEachKeyFrame
 -cp src/jsfl
 -cp src/common
 -lib haxe-jsfl
+--each
 
+-js download/FrameInsertEveryEachKeyFrame.jsfl
+-D jsfl_insert
+
+--next
+
+-js download/FrameRemoveEveryEachKeyFrame.jsfl
+-D jsfl_remove

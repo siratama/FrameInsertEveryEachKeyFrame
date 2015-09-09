@@ -10,41 +10,45 @@ class FrameInsertEveryEachKeyFrame
 	private var library:Library;
 
 	public static function main(){
-		#if jsfl
-		new FrameInsertEveryEachKeyFrame();
+		#if jsfl_insert
+		new FrameInsertEveryEachKeyFrame(1);
+		#elseif jsfl_remove
+		new FrameInsertEveryEachKeyFrame(-1);
 		#end
 	}
-	public function new()
+	public function new(addedFrames:Int)
 	{
 		if(Lib.fl.getDocumentDOM() == null) return;
-		Lib.fl.trace("--- FrameInsertEveryEachKeyFrame---");
 
-		/*
-		var frameAnimationExportFolerURI = fl.browseForFolderURL('Select ${FileDirectory.OUTPUT_DIRECTORY}.');
-		if(frameAnimationExportFolerURI == null){
-			return;
+		var timeline = Lib.fl.getDocumentDOM().getTimeline();
+		var selectedLayerIds = timeline.getSelectedLayers();
+		for (layerId in selectedLayerIds)
+		{
+			timeline.currentLayer = layerId;
+			var layer = timeline.layers[layerId];
+
+			var frames = layer.frames;
+			var frameTotal = frames.length;
+
+			for (frameIndex in 0...frames.length)
+			{
+				var frame = frames[frameIndex];
+				if(frame.startFrame != frameIndex) continue;
+
+				if(addedFrames > 0){
+					timeline.insertFrames(addedFrames, false, frameIndex);
+				}
+				else{
+					if(frame.duration == 1) continue;
+
+					timeline.removeFrames(frameIndex, frameIndex - addedFrames);
+					if(frameIndex + 1 >= layer.frameCount){
+						break;
+					}
+				}
+				frames = layer.frames;
+				frameTotal = frames.length;
+			}
 		}
-		var information = JsonReader.getInformation(frameAnimationExportFolerURI);
-		if(information == null){
-			Lib.fl.trace('not found: ${FileDirectory.getInfomationFilePath(frameAnimationExportFolerURI)}}}');
-			return;
-		}
-		var directoryStructure = JsonReader.getDirectoryStruture(frameAnimationExportFolerURI);
-
-		var document = fl.getDocumentDOM();
-		var assetsImport = new AssetsImport(document, frameAnimationExportFolerURI, directoryStructure);
-		assetsImport.execute();
-
-		var layerStructure = JsonReader.getLayerStructure(frameAnimationExportFolerURI);
-		var layerIndex = JsonReader.getLayerIndex(frameAnimationExportFolerURI);
-
-		var movieClipCreation = new MovieClipCreation(information, document, layerStructure, layerIndex);
-		movieClipCreation.execute();
-
-		if(layerMergence)
-			LayerMargence.execute(document);
-
-		*/
-		Lib.fl.trace("finish");
 	}
 }

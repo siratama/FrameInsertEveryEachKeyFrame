@@ -7,56 +7,49 @@ import js.Browser;
 class ExtensionIndex
 {
 	private var csInterfaceUtil:CSInterfaceUtil;
-	private static inline var JSFL_CLASS_NAME = "LibraryItemDuplication";
+	private static inline var JSFL_CLASS_NAME = "FrameInsertEveryEachKeyFrame";
 	private static inline var JSFL = JSFL_CLASS_NAME + ".jsfl";
 
-	private var folderCopyNameRuleElement:JQuery;
-	private var fileCopyNameRuleElement:JQuery;
-	private static inline var SLIDE_SPEED = "fast";
+	private var addedFramesElement:JQuery;
 
 	public static function main(){
-		new ExtensionIndex();
+		Browser.window.addEventListener("load", function(event){
+			new ExtensionIndex();
+		});
 	}
-	public function new(){
-		Browser.window.addEventListener("load", initialize);
-	}
-	private function initialize(event)
+	public function new()
 	{
 		csInterfaceUtil = CSInterfaceUtil.create();
 
-		var copyNameRuleElement = new JQuery("#copy_name_rule");
-		folderCopyNameRuleElement = new JQuery(".folder", copyNameRuleElement);
-		folderCopyNameRuleElement.val(Common.DEFALUT_FOLDER_COPY_NAME);
-		fileCopyNameRuleElement = new JQuery(".file", copyNameRuleElement);
+		var containerElement = new JQuery("#container");
 
-		setTitleBar("copy_name_rule_title", copyNameRuleElement);
+		addedFramesElement = new JQuery(".added_frames", containerElement);
+		addedFramesElement.val("1");
+		addedFramesElement.focus(function(event){
+			addedFramesElement.select();
+		});
 
-		var runButtonElement = new JQuery("#run");
-		runButtonElement.mousedown(function(event){
-			run();
+		var insertButton = new JQuery("#insert");
+		insertButton.mousedown(function(event){
+			run(true);
+		});
+
+		var removeButton = new JQuery("#remove");
+		removeButton.mousedown(function(event){
+			run(false);
 		});
 	}
-	private function setTitleBar(titleBarId:String, slideElement:JQuery){
-
-		var titleElement = new JQuery("#" + titleBarId);
-		titleElement.mousedown(function(event)
-		{
-			if(slideElement.is(":hidden"))
-				slideElement.slideDown(SLIDE_SPEED);
-			else
-				slideElement.slideUp(SLIDE_SPEED);
-		});
-	}
-	private function run()
+	private function run(plus:Bool)
 	{
-		var folderCopyName = folderCopyNameRuleElement.val();
-		if(folderCopyName == ""){
-			csInterfaceUtil.flTrace("Set folder copy name rule.");
+		var addedFramesString = addedFramesElement.val();
+		if(addedFramesString == ""){
+			csInterfaceUtil.flTrace("Set frames num.");
 			return;
 		}
-
-		var fileCopyName = fileCopyNameRuleElement.val();
-		csInterfaceUtil.evalScript('new $JSFL_CLASS_NAME("$folderCopyName", "$fileCopyName");');
+		if(!plus){
+			addedFramesString = "-" + addedFramesString;
+		}
+		csInterfaceUtil.evalScript('new $JSFL_CLASS_NAME($addedFramesString);');
 	}
 }
 

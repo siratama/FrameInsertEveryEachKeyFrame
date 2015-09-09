@@ -1,12 +1,35 @@
 (function ($hx_exports) { "use strict";
-var FrameInsertEveryEachKeyFrame = $hx_exports.FrameInsertEveryEachKeyFrame = function() {
+var FrameInsertEveryEachKeyFrame = $hx_exports.FrameInsertEveryEachKeyFrame = function(addedFrames) {
 	if(jsfl.Lib.fl.getDocumentDOM() == null) return;
-	jsfl.Lib.fl.trace("--- FrameInsertEveryEachKeyFrame---");
-	jsfl.Lib.fl.trace("finish");
+	var timeline = jsfl.Lib.fl.getDocumentDOM().getTimeline();
+	var selectedLayerIds = timeline.getSelectedLayers();
+	var _g = 0;
+	while(_g < selectedLayerIds.length) {
+		var layerId = selectedLayerIds[_g];
+		++_g;
+		timeline.currentLayer = layerId;
+		var layer = timeline.layers[layerId];
+		var frames = layer.frames;
+		var frameTotal = frames.length;
+		var _g2 = 0;
+		var _g1 = frames.length;
+		while(_g2 < _g1) {
+			var frameIndex = _g2++;
+			var frame = frames[frameIndex];
+			if(frame.startFrame != frameIndex) continue;
+			if(addedFrames > 0) timeline.insertFrames(addedFrames,false,frameIndex); else {
+				if(frame.duration == 1) continue;
+				timeline.removeFrames(frameIndex,frameIndex - addedFrames);
+				if(frameIndex + 1 >= layer.frameCount) break;
+			}
+			frames = layer.frames;
+			frameTotal = frames.length;
+		}
+	}
 };
 FrameInsertEveryEachKeyFrame.__name__ = true;
 FrameInsertEveryEachKeyFrame.main = function() {
-	new FrameInsertEveryEachKeyFrame();
+	new FrameInsertEveryEachKeyFrame(1);
 };
 var Std = function() { };
 Std.__name__ = true;
@@ -22,11 +45,24 @@ haxe.Log.trace = function(v,infos) {
 var js = {};
 js.Boot = function() { };
 js.Boot.__name__ = true;
+js.Boot.__unhtml = function(s) {
+	return s.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;");
+};
 js.Boot.__trace = function(v,i) {
 	var msg;
 	if(i != null) msg = i.fileName + ":" + i.lineNumber + ": "; else msg = "";
 	msg += js.Boot.__string_rec(v,"");
-	fl.trace(msg);
+	if(i != null && i.customParams != null) {
+		var _g = 0;
+		var _g1 = i.customParams;
+		while(_g < _g1.length) {
+			var v1 = _g1[_g];
+			++_g;
+			msg += "," + js.Boot.__string_rec(v1,"");
+		}
+	}
+	var d;
+	if(typeof(document) != "undefined" && (d = document.getElementById("haxe:trace")) != null) d.innerHTML += js.Boot.__unhtml(msg) + "<br/>"; else if(typeof console != "undefined" && console.log != null) console.log(msg);
 };
 js.Boot.__string_rec = function(o,s) {
 	if(o == null) return "null";
