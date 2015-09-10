@@ -28,6 +28,7 @@ button {
     color: #686868; }
 
 input {
+  background: #a0a0a0;
   border: 1px solid #000000;
   font-size: 12px;
   box-sizing: border-box; }

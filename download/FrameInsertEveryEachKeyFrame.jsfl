@@ -27,6 +27,12 @@ var FrameInsertEveryEachKeyFrame = $hx_exports.FrameInsertEveryEachKeyFrame = fu
 			frameTotal = frames.length;
 		}
 	}
+	var _g2 = 0;
+	while(_g2 < selectedLayerIds.length) {
+		var layerId1 = selectedLayerIds[_g2];
+		++_g2;
+		timeline.setSelectedLayers(layerId1,false);
+	}
 };
 FrameInsertEveryEachKeyFrame.__name__ = true;
 FrameInsertEveryEachKeyFrame.main = function() {

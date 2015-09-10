@@ -52,5 +52,7 @@ class FrameInsertEveryEachKeyFrame
 				frameTotal = frames.length;
 			}
 		}
+		for (layerId in selectedLayerIds)
+			timeline.setSelectedLayers(layerId, false);
 	}
 }
