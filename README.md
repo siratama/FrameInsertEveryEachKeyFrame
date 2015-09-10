@@ -9,6 +9,8 @@ It increased or decreased in a frame in each key frames of all selected layers.
 FrameInsertEveryEachKeyFrame は Flash Pro CC 用 拡張パネルです。
 選択した全てのレイヤーの各キーフレームに対し、フレームを増減させます。
 
+![run](img/run.png)
+
 ---
 ## Download (Flash Pro CC)
 
